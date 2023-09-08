@@ -1,3 +1,11 @@
 # reminder_django_react
 
-![]([https://www.example.com/path/to/image.jpg](https://drive.google.com/file/d/1WqXc9OrBchScniqi0h-aUo7ycIgoUQgP/view?usp=sharing)https://drive.google.com/file/d/1WqXc9OrBchScniqi0h-aUo7ycIgoUQgP/view?usp=sharing)
+![](images/5.jpg)
+![](images/2.jpg)
+![](images/3.jpg)
+![](images/4.jpg)
+![](images/6.jpg)
+![](images/7.jpg)
+![](images/8.jpg)
+ 
+
