@@ -1,7 +1,8 @@
 # reminder_django_react
 
 ![](images/5.jpg)
- 
+[See images of final app]([URL](https://docs.google.com/document/d/1cg5DogL1P8y5i2rO2YBmQABbFFfQXQmMwu-PH0de-Ic/edit?usp=sharing))
+
  
 
 # Reminder App
