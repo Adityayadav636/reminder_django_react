@@ -1,10 +1,14 @@
-import React from 'react';
+import React ,{useState, useEffect} from 'react';
 import {
     Button, Typography, Container, Grid, Paper, TextField, FormControl, 
     InputLabel, Select, MenuItem, TextareaAutosize, Checkbox, FormControlLabel 
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import { listReminders } from '../redux/slices/reminderSlice';  // Import the Redux action
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, Link } from "react-router-dom";
+
 const useStyles = makeStyles((theme) => ({
     container: {
         marginTop: theme.spacing(4),
@@ -22,15 +26,36 @@ const useStyles = makeStyles((theme) => ({
 }));
 function EnableReminderScreen() {
     const classes = useStyles();
+    const [email, setEmail] = useState('');
+    const [contactNo, setContactNo] = useState('');
+    const [smsNo, setSmsNo] = useState('');
+    const [selectedReminderId, setSelectedReminderId] = useState(null);
 
-    // State (You can expand on these with useState as required)
-    const [subject, setSubject] = React.useState('');
-    const [description, setDescription] = React.useState('');
-    const [email, setEmail] = React.useState('');
-    const [contactNo, setContactNo] = React.useState('');
-    const [smsNo, setSmsNo] = React.useState('');
+    const dispatch = useDispatch();
+    const reminders = useSelector(state => state.reminder.listReminders);
 
-    //... Add other state variables as required.
+    useEffect(() => {
+        dispatch(listReminders());
+    }, [dispatch]);
+
+    const handleReminderChange = (event) => {
+        const reminderId = event.target.value;
+        setSelectedReminderId(reminderId);
+        const selectedReminder = reminders.find(reminder => reminder.id === reminderId);
+
+        if (selectedReminder) {
+            setEmail(selectedReminder.email);
+            setContactNo(selectedReminder.contact_no);
+            setSmsNo(selectedReminder.sms_no);
+        }
+    };
+
+    const handleEnable = () => {
+        // console.log(`Enabling reminder with ID ${selectedReminderId}`);
+        alert("Reminder enabled successfully!");
+
+        // Logic to enable the reminder...
+    }
 
     return (
         <Container className={classes.container} maxWidth="md">
@@ -40,41 +65,21 @@ function EnableReminderScreen() {
             <Paper className={classes.paper}>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
-                        <TextField required
-                            fullWidth
-                            id="date"
-                            label="Select a Date"
-                            type="date"
-                            InputProps={{
-                                startAdornment: <CalendarTodayIcon />
-                            }}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
                         <FormControl className={classes.formControl}>
-                            <InputLabel id="subject-label">Subject</InputLabel>
-                            <Select required
-                                labelId="subject-label"
-                                value={subject}
-                                onChange={(e) => setSubject(e.target.value)}
+                            <InputLabel id="reminder-select-label">Select Reminder</InputLabel>
+                            <Select
+                                labelId="reminder-select-label"
+                                value={selectedReminderId}
+                                onChange={handleReminderChange}
                             >
-                                {/* Sample list of subjects */}
-                                <MenuItem value={"Subject 1"}>English</MenuItem>
-                                <MenuItem value={"Subject 2"}>Mathematics</MenuItem>
-                                <MenuItem value={"Subject 3"}>Science</MenuItem>
+                                {reminders.map(reminder => (
+                                    <MenuItem key={reminder.id} value={reminder.id}>
+                                        {reminder.subject} - {reminder.date}
+                                    </MenuItem>
+                                ))}
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={12}>
-                        <TextareaAutosize required
-                            rowsMin={4}
-                            placeholder="Add description..."
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                            style={{ width: '100%' }}
-                        />
-                    </Grid>
-                    {/* Add other fields like Email Address, Contact No, SMS No */}
                     <Grid item xs={12}>
                         <TextField
                             fullWidth required
@@ -103,34 +108,25 @@ function EnableReminderScreen() {
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography variant="subtitle1">Recur for next:</Typography>
-                        <FormControlLabel
-                            control={<Checkbox name="7Days" />}
-                            label="7 Days"
-                        />
-                        <FormControlLabel
-                            control={<Checkbox name="5Days" />}
-                            label="5 Days"
-                        />
-                        <FormControlLabel
-                            control={<Checkbox name="3Days" />}
-                            label="3 Days"
-                        />
-                        <FormControlLabel
-                            control={<Checkbox name="2Days" />}
-                            label="2 Days"
-                        />
+                        <Button 
+                            variant="contained" 
+                            color="primary" 
+                            className={classes.button}
+                            onClick={handleEnable}
+                        >
+                            Enable
+                        </Button>
+                        <Button 
+                            variant="contained" 
+                            color="secondary" 
+                            className={classes.button} component={Link} to="/home"
+                        >
+                            Cancel
+                        </Button>
                     </Grid>
-                </Grid>\
-                 
-                <Button variant="contained" color="primary" className={classes.button}>
-                Confirm
-            </Button> 
-            <Button variant="contained" color="primary" className={classes.button}>
-                Cancel
-            </Button>
+                </Grid>
             </Paper>
-            <Button variant="contained" color="secondary" className={classes.button}>
+            <Button variant="contained" color="secondary"   className={classes.button}>
                 Log out
             </Button>
         </Container>

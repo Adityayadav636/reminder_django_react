@@ -6,8 +6,8 @@ import {
     InputLabel, Select, MenuItem, Checkbox, FormControlLabel
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useHistory } from "react-router-dom";
 import { logout } from "../redux/slices/userSlice";
+import { useHistory, Link } from "react-router-dom";
 
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 
@@ -133,10 +133,12 @@ function ViewRemindersScreen() {
 ))}
 
                 </Grid>
-                <Button variant="contained" color="secondary" onClick={handleLogout}   className={classes.button}>
+                <Button variant="contained" color="primary"  component={Link} to="/home"    className={classes.button}>
+Go back             </Button>
+            </Paper>
+            <Button variant="contained" color="secondary" onClick={handleLogout}   className={classes.button}>
                     Log Out
                 </Button>
-            </Paper>
         </Container>
     );
 }

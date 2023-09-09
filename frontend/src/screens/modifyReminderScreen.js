@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Typography, Container, Grid, Paper, TextField, FormControl, InputLabel, Select, MenuItem, TextareaAutosize, Checkbox, FormControlLabel } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import { listReminders, getReminderDetails, modifyReminder } from '../redux/slices/reminderSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -21,8 +24,6 @@ const useStyles = makeStyles((theme) => ({
 
 function ModifyReminderScreen() {
     const classes = useStyles();
-
-    // Dummy state for demonstration
     const [date, setDate] = useState('');
     const [subject, setSubject] = useState('');
     const [reminder, setReminder] = useState('');
@@ -30,23 +31,67 @@ function ModifyReminderScreen() {
     const [email, setEmail] = useState('');
     const [contactNo, setContactNo] = useState('');
     const [smsNo, setSmsNo] = useState('');
-    //... more state as needed
-    const handleDateChange = (newDate) => {
-        setDate(newDate);
-     };
+    const [selectedReminderId, setSelectedReminderId] = useState(null);
 
-    const handleSubjectChange = (newSubject) => {
-        setSubject(newSubject);
-     };
+    const dispatch = useDispatch();
+    const reminders = useSelector(state => state.reminder.listReminders);
+console.log(reminders)
+    useEffect(() => {
+        dispatch(listReminders());
+    }, [dispatch]);
+
+    const handleReminderChange = (event) => {
+        const reminderId = event.target.value;
+        setSelectedReminderId(reminderId);
+        const selectedReminder = reminders.find(reminder => reminder.id === reminderId);
+
+        if (selectedReminder) {
+            setDate(selectedReminder.date);
+            setSubject(selectedReminder.subject);
+            setEmail(selectedReminder.email);
+            setContactNo(selectedReminder.contact_no);
+            setSmsNo(selectedReminder.sms_no);
+            // Add other fields as necessary
+        }
+    };
+    const handleConfirm = async () => {
+        try {
+            const updatedReminder = {
+                email,
+                contact_no: contactNo,
+                sms_no: smsNo
+                // Add other fields as necessary
+            };
+            console.log(updatedReminder)
+            dispatch(modifyReminder(selectedReminderId, updatedReminder));
+         } catch (error) {
+            console.error("Failed to update reminder:", error);
+        }
+    };
+
     return (
         <Container className={classes.container} maxWidth="md">
-        <Typography variant="h4" gutterBottom>
-            Modify Reminder
-        </Typography>
-        <Paper className={classes.paper}>
-            <Grid container spacing={3}>
-          
-                    {/* Add other fields like Email Address, Contact No, SMS No */}
+            <Typography variant="h4" gutterBottom>
+                Modify Reminder
+            </Typography>
+            <Paper className={classes.paper}>
+                <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                        <FormControl className={classes.formControl}>
+                            <InputLabel id="reminder-select-label">Select Reminder</InputLabel>
+                            <Select
+                                labelId="reminder-select-label"
+                                value={selectedReminderId}
+                                onChange={handleReminderChange}
+                            >
+                                {reminders.map(reminder => (
+                                    <MenuItem key={reminder.id} value={reminder.id}>
+                                        {reminder.subject} - {reminder.date}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </Grid>
                     <Grid item xs={12}>
                         <TextField
                             fullWidth required
@@ -74,39 +119,30 @@ function ModifyReminderScreen() {
                             onChange={(e) => setSmsNo(e.target.value)}
                         />
                     </Grid>
+                    
                     <Grid item xs={12}>
-                        <Typography variant="subtitle1">Recur for next:</Typography>
-                        <FormControlLabel
-                            control={<Checkbox name="7Days" />}
-                            label="7 Days"
-                        />
-                        <FormControlLabel
-                            control={<Checkbox name="5Days" />}
-                            label="5 Days"
-                        />
-                        <FormControlLabel
-                            control={<Checkbox name="3Days" />}
-                            label="3 Days"
-                        />
-                        <FormControlLabel
-                            control={<Checkbox name="2Days" />}
-                            label="2 Days"
-                        />
+                        <Button 
+                            variant="contained" 
+                            color="primary" 
+                            className={classes.button}
+                            onClick={handleConfirm}
+                        >
+                            Confirm
+                        </Button>
+                        <Button 
+                            variant="contained" 
+                            color="secondary" 
+                            className={classes.button} component={Link} to="/home" 
+                        >
+                            Done
+                        </Button>
                     </Grid>
-                    <Button variant="contained" color="primary" className={classes.button}>
-                Confirm
-            </Button> 
-            <Button variant="contained" color="primary" className={classes.button}>
-                Cancel
-            </Button>
-                {/* Other fields (description, email, contactNo, smsNo, and recurOptions) go here */}
-            </Grid>
-           
-        </Paper>
-        <Button variant="contained" color="secondary" className={classes.button}>
+                </Grid>
+            </Paper>
+            <Button variant="contained" color="secondary" className={classes.button}>
                 Log out
             </Button>
-    </Container>
+        </Container>
     );
 }
 

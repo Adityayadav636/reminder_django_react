@@ -186,7 +186,7 @@ function SetReminderScreen() {
                 Confirm
             </Button> 
             <Button variant="contained" color="primary" component={Link} to="/home" className={classes.button}>
-                Go back
+                Done
             </Button>
             </Paper>
             <Button variant="contained" color="secondary"      className={classes.button}>

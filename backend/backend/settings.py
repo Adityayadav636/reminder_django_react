@@ -13,22 +13,21 @@ import os
 from pathlib import Path
 
 from datetime import timedelta
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
- 
 
+
+ 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-tc^7!bwv0us7z9d23_6m$egf5m#ho8k0^k2%bq2(qyji^1mfc6'
+SECRET_KEY = 'django-insecure-d(4ncpfo=(t@&9a!&b&%gd#6s!z@@(g!3ld=&fhfdn%0@qog0n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-
 
 # Application definition
 
@@ -38,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles', #local apps
+    'django.contrib.staticfiles',
     'api.apps.ApiConfig',
     #3rd party apps 
     'rest_framework',
