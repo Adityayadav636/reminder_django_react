@@ -1,4 +1,4 @@
- [Video demo of reminder app]([https://docs.google.com/document/d/1cg5DogL1P8y5i2rO2YBmQABbFFfQXQmMwu-PH0de-Ic/edit?usp=sharing](https://youtu.be/WSbnVznVOK8))
+ [Video demo of reminder app](https://www.youtube.com/watch?v=WSbnVznVOK8&ab_channel=AchyuteYadav)
 
 [See images of final app](https://docs.google.com/document/d/1cg5DogL1P8y5i2rO2YBmQABbFFfQXQmMwu-PH0de-Ic/edit?usp=sharing)
 
