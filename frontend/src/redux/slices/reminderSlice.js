@@ -105,6 +105,7 @@ export const {
 export const createReminder = (reminder) => async (dispatch) => {
   try {
     dispatch(createReminderStart());
+    console.log("pending");
     const createdReminder = await reminderAPI.createReminder(reminder);
     dispatch(createReminderSuccess(createdReminder));
   } catch (error) {

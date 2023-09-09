@@ -4,7 +4,7 @@ class ReminderAPI {
   createReminder = async (reminder) => {
     try {
       const token = JSON.parse(localStorage.getItem("userInfo")).token;
-
+      console.log("yes");
       const config = {
         headers: {
           "Content-type": "application/json",
@@ -12,7 +12,7 @@ class ReminderAPI {
         },
       };
 
-      const { data } = await axios.post(`/api/reminders/add/`, reminder, config);
+      const { data } = await axios.post(`/api/reminders/setreminder/`, reminder, config);
 
       return data;
     } catch (error) {
@@ -98,7 +98,7 @@ class ReminderAPI {
         },
       };
 
-      const { data } = await axios.get(`/api/reminders/list/`, config);
+      const { data } = await axios.get(`/api/reminders/viewreminder/`, config);
 
       return data;
     } catch (error) {
