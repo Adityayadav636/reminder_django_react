@@ -1,12 +1,7 @@
 # reminder_django_react
 
 ![](images/5.jpg)
-![](images/2.jpg)
-![](images/3.jpg)
-![](images/4.jpg)
-![](images/6.jpg)
-![](images/7.jpg)
-![](images/8.jpg)
+ 
  
 
 # Reminder App
@@ -95,14 +90,8 @@ A full-stack application that helps users set and manage reminders.
 
 The app should now be running on `http://localhost:3000/`.
 
-## Deployment
-
-(Include steps or references on how to deploy both frontend and backend. This could be on platforms like Heroku, Netlify, etc.)
-
-## Contributing
-
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
+ 
+ 
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
