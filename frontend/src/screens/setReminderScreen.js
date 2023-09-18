@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { createReminder } from '../redux/slices/reminderSlice';
 import { useHistory, Link } from "react-router-dom";
+import { logout } from "../redux/slices/userSlice";
 
 import {
     Button, Typography, Container, Grid, Paper, TextField, FormControl, 
@@ -37,6 +38,7 @@ function SetReminderScreen() {
     const [smsNo, setSmsNo] = React.useState('');
     const [date, setDate] = React.useState('');  // Declare the date state variable
     const [recurrence, setRecurrence] = React.useState('');
+    const history = useHistory();
 
     const dispatch = useDispatch();
 
@@ -78,8 +80,16 @@ function SetReminderScreen() {
         console.log("hello")
         // Now, instead of making the API call directly, you'll dispatch the Redux action:
         dispatch(createReminder(reminderData));
+        
     };
-
+    const handleLogout = () => {
+        dispatch(logout());
+        console.log("hi")
+        history.push("/");
+    
+        window.location.reload(); // Reload the page
+    
+      };
     return (
         <Container className={classes.container} maxWidth="md">
             <Typography variant="h4" gutterBottom>
@@ -186,10 +196,10 @@ function SetReminderScreen() {
                 Confirm
             </Button> 
             <Button variant="contained" color="primary" component={Link} to="/home" className={classes.button}>
-                Done
+                Go Back
             </Button>
             </Paper>
-            <Button variant="contained" color="secondary"      className={classes.button}>
+            <Button variant="contained" color="secondary"  onClick={handleLogout}     className={classes.button}>
                 Log out
             </Button>
         </Container>

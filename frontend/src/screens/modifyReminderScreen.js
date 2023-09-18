@@ -5,6 +5,7 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import { listReminders, getReminderDetails, modifyReminder } from '../redux/slices/reminderSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, Link } from "react-router-dom";
+import { logout } from "../redux/slices/userSlice";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -32,6 +33,7 @@ function ModifyReminderScreen() {
     const [contactNo, setContactNo] = useState('');
     const [smsNo, setSmsNo] = useState('');
     const [selectedReminderId, setSelectedReminderId] = useState(null);
+    const history = useHistory();
 
     const dispatch = useDispatch();
     const reminders = useSelector(state => state.reminder.listReminders);
@@ -63,12 +65,23 @@ console.log(reminders)
                 // Add other fields as necessary
             };
             console.log(updatedReminder)
+          
             dispatch(modifyReminder(selectedReminderId, updatedReminder));
+            alert('Reminder modified successfully!');
+
          } catch (error) {
             console.error("Failed to update reminder:", error);
         }
     };
-
+    const handleLogout = () => {
+        dispatch(logout());
+        console.log("hi")
+        history.push("/");
+    
+        window.location.reload(); // Reload the page
+    
+      };
+    
     return (
         <Container className={classes.container} maxWidth="md">
             <Typography variant="h4" gutterBottom>
@@ -134,12 +147,12 @@ console.log(reminders)
                             color="secondary" 
                             className={classes.button} component={Link} to="/home" 
                         >
-                            Done
+                            Go Back
                         </Button>
                     </Grid>
                 </Grid>
             </Paper>
-            <Button variant="contained" color="secondary" className={classes.button}>
+            <Button variant="contained" color="secondary" onClick={handleLogout} className={classes.button}>
                 Log out
             </Button>
         </Container>

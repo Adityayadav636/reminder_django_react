@@ -8,7 +8,7 @@ function Footer() {
         <Grid container justifyContent="center">
           <Grid item>
             <Typography variant="body1" color="textSecondary" align="center">
-              Copyright &copy; Axciom
+              Copyright &copy; Acxiom
             </Typography>
           </Grid>
         </Grid>

@@ -5,6 +5,7 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import { listReminders } from '../redux/slices/reminderSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, Link } from "react-router-dom";
+import { logout } from "../redux/slices/userSlice";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -28,6 +29,7 @@ function DisableReminderScreen() {
     const [contactNo, setContactNo] = useState('');
     const [smsNo, setSmsNo] = useState('');
     const [selectedReminderId, setSelectedReminderId] = useState(null);
+    const history = useHistory();
 
     const dispatch = useDispatch();
     const reminders = useSelector(state => state.reminder.listReminders);
@@ -53,7 +55,15 @@ function DisableReminderScreen() {
 
         alert("Reminder disabled successfully!");
     }
-
+    const handleLogout = () => {
+        dispatch(logout());
+        console.log("hi")
+        history.push("/");
+    
+        window.location.reload(); // Reload the page
+    
+      };
+    
     return (
         <Container className={classes.container} maxWidth="md">
             <Typography variant="h4" gutterBottom>
@@ -118,12 +128,12 @@ function DisableReminderScreen() {
                             color="secondary" 
                             className={classes.button} component={Link} to="/home"
                         >
-                            Done
+                            Go Back
                         </Button>
                     </Grid>
                 </Grid>
             </Paper>
-            <Button variant="contained" color="secondary" className={classes.button}>
+            <Button variant="contained" color="secondary" onClick={handleLogout} className={classes.button}>
                 Log out
             </Button>
         </Container>
